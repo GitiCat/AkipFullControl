@@ -4,6 +4,12 @@
              xmlns:local="clr-namespace:AkipFullControl"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Stylesheet/BaseTextStyle.xaml" />
+                <ResourceDictionary Source="Stylesheet/ApplicationColorPicker.xaml" />
+                <ResourceDictionary Source="Stylesheet/Buttons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
