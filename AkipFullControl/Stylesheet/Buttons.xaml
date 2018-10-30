@@ -46,12 +46,31 @@
         <Setter Property="Padding" Value="40,0,0,0" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
 
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="true">
-                <Setter Property="Background" Value="{StaticResource GrayColorBrush}"/>
-                <Setter Property="Foreground" Value="{StaticResource WhiteColorBrush}"/>
-            </Trigger>
-        </Style.Triggers>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentControl HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                                        SnapsToDevicePixels="True"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{StaticResource MouseOverColorBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                    
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        
     </Style>
 
     <Style x:Key="SlideMenuTextStyle" TargetType="{x:Type TextBlock}">
@@ -59,5 +78,30 @@
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Foreground" Value="{StaticResource GrayColorBrush}" />
     </Style>
+
+    <ControlTemplate x:Key="ToggleButtonMid" TargetType="{x:Type ToggleButton}">
+        <Border
+                Name="Border"
+                Background="{StaticResource TransparentBrush}"
+                BorderBrush="{StaticResource TransparentBrush}"
+                BorderThickness="0,1,0,1"
+                CornerRadius="0" 
+                Height="50"
+                Padding="40 0 0 0">
+            <ContentControl Content="{TemplateBinding Content}"
+                            ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            VerticalAlignment="Center"/>
+        </Border>
+
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter TargetName="Border" Property="Background" Value="{StaticResource MouseOverColorBrush}"/>
+            </Trigger>
+            <Trigger Property="IsChecked" Value="true">
+                <Setter TargetName="Border" Property="Background" Value="{StaticResource MouseOverColorBrush}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
 
 </ResourceDictionary>

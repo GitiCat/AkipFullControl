@@ -83,6 +83,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="260" />
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
@@ -94,33 +95,48 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="0" Margin="0,35,0,0">
-                <Button VerticalAlignment="Top" Style="{StaticResource SlideMenuButtonStyle}">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Width="35"
+                
+                <RadioButton Template="{DynamicResource ToggleButtonMid}"
+                             IsChecked="{Binding IsWorkToggleButtonChecked}">
+                    <RadioButton.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="35"
                                    FontSize="18"
                                    Style="{StaticResource AwesomeBase}"
                                    Text="&#xf080;" />
-                        <TextBlock Style="{StaticResource SlideMenuTextStyle}" Text="Работа" />
-                    </StackPanel>
-                </Button>
-                <Button VerticalAlignment="Top" Style="{StaticResource SlideMenuButtonStyle}">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Width="35"
+                            <TextBlock Style="{StaticResource SlideMenuTextStyle}" Text="Работа" />
+                        </StackPanel>
+                    </RadioButton.Content>
+                </RadioButton>
+                
+                <RadioButton Template="{DynamicResource ToggleButtonMid}"
+                             IsChecked="{Binding IsProgramToggleButtonChecked}">
+                    <RadioButton.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="35"
                                    FontSize="18"
                                    Style="{StaticResource AwesomeBase}"
                                    Text="&#xf0ce;" />
-                        <TextBlock Style="{StaticResource SlideMenuTextStyle}" Text="Программа" />
-                    </StackPanel>
-                </Button>
-                <Button VerticalAlignment="Top" Command="{Binding OpenCommunicationPage}" Style="{StaticResource SlideMenuButtonStyle}">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Width="35"
+                            <TextBlock Style="{StaticResource SlideMenuTextStyle}" Text="Программа" />
+                        </StackPanel>
+                    </RadioButton.Content>
+                </RadioButton>
+
+                <RadioButton Template="{DynamicResource ToggleButtonMid}"
+                             IsChecked="{Binding IsConnectToggleButtonChecked}">
+                    <RadioButton.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="35"
                                    FontSize="18"
                                    Style="{StaticResource AwesomeBase}"
                                    Text="&#xf287;" />
-                        <TextBlock Style="{StaticResource SlideMenuTextStyle}" Text="Подключение" />
-                    </StackPanel>
-                </Button>
+                            <TextBlock Style="{StaticResource SlideMenuTextStyle}" Text="Подключение" />
+                        </StackPanel>
+                    </RadioButton.Content>
+                </RadioButton>
+                
+                
+
             </StackPanel>
 
             <StackPanel Grid.Row="1">
@@ -155,7 +171,17 @@
 
         </Grid>
 
-        <Frame Grid.Column="1"
+        <Rectangle Grid.Column="1" VerticalAlignment="Stretch" Width="1" Margin="2" >
+            <Rectangle.Stroke>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="{StaticResource WhiteColor}" Offset="0"/>
+                    <GradientStop Color="{StaticResource MouseOverColor}" Offset="0.517"/>
+                    <GradientStop Color="{StaticResource WhiteColor}" Offset="1"/>
+                </LinearGradientBrush>
+            </Rectangle.Stroke>
+        </Rectangle>
+
+        <Frame Grid.Column="2"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
                NavigationUIVisibility="Hidden"
