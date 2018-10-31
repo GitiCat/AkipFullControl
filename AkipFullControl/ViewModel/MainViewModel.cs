@@ -1,8 +1,11 @@
 ﻿using AkipFullControl.Core;
+using AkipFullControl.ValueConverters;
 using System;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 
 namespace AkipFullControl
 {
@@ -38,6 +41,13 @@ namespace AkipFullControl
         ///     Команда скрытия главного окна приложения
         /// </summary>
         public ICommand HideApplication { get; set; }
+
+        private ObservableCollection<ConnectMethodDesignModel> _connectButtonCollection;
+        public ObservableCollection<ConnectMethodDesignModel> ConnectButtonCollection
+        {
+            get { return _connectButtonCollection; }
+            set { _connectButtonCollection = value; OnPropertyChanged(); }
+        }
 
         #region Menu Commands
         /// <summary>
@@ -87,6 +97,20 @@ namespace AkipFullControl
                 if (mWindow != null)
                     mWindow.WindowState = WindowState.Minimized;
             });
+
+            ConnectButtonCollection = new ObservableCollection<ConnectMethodDesignModel>
+            {
+                new ConnectMethodDesignModel()
+                {
+                    ButtonName = "Lan",
+                    ButtonCommand = new RCommand(() => { CurrentPage = new LanConnectPage(); })
+                },
+                new ConnectMethodDesignModel()
+                {
+                    ButtonName = "Com",
+                    ButtonCommand = new RCommand(() => { CurrentPage = new ComConnectPage(); })
+                }
+            };
         }
 
         /// <summary>
@@ -102,18 +126,18 @@ namespace AkipFullControl
             OpenApplicationSettingsPage = new RCommand(() => { });
         }
 
-        private bool _isWorkPanelVisible;
+
+        private int _workPanelHeight;
         /// <summary>
-        ///     Задает или возвращает состояния отображения 
-        ///     панели подключенных устройств для работы
+        ///     Возвращает или задает высоту панели устройств,
+        ///     готовых к работе
         /// </summary>
-        public bool IsWorkPanelVisible
+        public int WorkPanelHeight
         {
-            get { return _isWorkPanelVisible; }
-            set { _isWorkPanelVisible = value; OnPropertyChanged(); }
+            get { return _workPanelHeight; }
+            set { _workPanelHeight = value; OnPropertyChanged(); }
         }
-
-
+        
         /// <summary>
         ///     Возвращает или задает состояние активности 
         ///     кнопки подключенных устройств для работы
@@ -136,17 +160,16 @@ namespace AkipFullControl
             
         }
 
-        private bool _isProgramPanelVisible;
+        private int _programPanelHeight;
         /// <summary>
-        ///     Задает или возвращает состояние отображения
-        ///     панели подключенных устройст для настройки программы
+        ///     Возвращает или задает высоту панели готовых устройств
+        ///     для настройки программы нагрузки
         /// </summary>
-        public bool IsProgramPanelVisible
+        public int ProgramPanelHeight
         {
-            get { return _isProgramPanelVisible; }
-            set { _isProgramPanelVisible = value; OnPropertyChanged(); }
+            get { return _programPanelHeight; }
+            set { _programPanelHeight = value; OnPropertyChanged(); }
         }
-
 
         /// <summary>
         ///     Возвращает или задает состояние активности
@@ -170,18 +193,17 @@ namespace AkipFullControl
             
         }
 
-        private bool _isConnectPanelVisible;
+        private int _connectPanelHeight;
         /// <summary>
-        ///     Задает или возвращает состояние отображения
-        ///     панели подключения новых устройст
+        ///     Возвращает или задает высоту панели выбора
+        ///     подключения нового устройства
         /// </summary>
-        public bool IsConnectPanelVisible
+        public int ConnectPanelHeight
         {
-            get { return _isConnectPanelVisible; }
-            set { _isConnectPanelVisible = value; OnPropertyChanged(); }
+            get { return _connectPanelHeight; }
+            set { _connectPanelHeight = value; OnPropertyChanged(); }
         }
-
-
+        
         /// <summary>
         ///     Возвращает или задает состояние активности
         ///     кнопки подключения новых устройств
@@ -193,15 +215,39 @@ namespace AkipFullControl
         }
 
         public static readonly DependencyProperty IsConnectToggleButtonCheckedProperty =
-            DependencyProperty.Register(
-                nameof(IsConnectToggleButtonChecked), 
-                typeof(bool), 
-                typeof(MainWindow), 
+            DependencyProperty.RegisterAttached(
+                nameof(IsConnectToggleButtonChecked),
+                typeof(bool),
+                typeof(MainWindow),
                 new UIPropertyMetadata(false, new PropertyChangedCallback(ConnectToggleButtonCheckedMethod)));
 
         private static void ConnectToggleButtonCheckedMethod(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            
+            int startValue;
+            int endValue;
+
+            var vm = d as MainViewModel;
+
+            if (vm.IsConnectToggleButtonChecked)
+            {
+                startValue = 0;
+                endValue = 100;
+
+                for(int i = startValue; i <= endValue; i++)
+                {
+                    vm.ConnectPanelHeight += i;
+                }
+            }
+            else
+            {
+                startValue = 100;
+                endValue = 0;
+
+                for(int i = startValue; i >= endValue; i--)
+                {
+                    vm.ConnectPanelHeight -= i;
+                }
+            }
         }
     }
 }

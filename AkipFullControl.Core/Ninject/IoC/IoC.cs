@@ -13,7 +13,8 @@ namespace AkipFullControl.Core
 
         private static void BindViewModel()
         {
-            Kernel.Bind<GlobalCollections>().ToConstant(new GlobalCollections());
+            Kernel.Bind<ReadyConfigureButton>().ToConstant(new ReadyConfigureButton());
+            Kernel.Bind<ReadyToWorkButton>().ToConstant(new ReadyToWorkButton());
         }
 
         public static T Get<T>()

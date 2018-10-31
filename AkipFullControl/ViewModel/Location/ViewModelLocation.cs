@@ -5,9 +5,8 @@ namespace AkipFullControl
     public class ViewModelLocation
     {
         public static ViewModelLocation Instance { get; private set; } = new ViewModelLocation();
-        /// <summary>
-        ///     Глобальный класс коллекций приложения
-        /// </summary>
-        public static GlobalCollections GlobalCollections => IoC.Get<GlobalCollections>();
+        
+        public static ReadyConfigureButton ReadyConfigureButton => IoC.Get<ReadyConfigureButton>();
+        public static ReadyToWorkButton ReadyToWorkButton => IoC.Get<ReadyToWorkButton>();
     }
 }
